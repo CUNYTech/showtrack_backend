@@ -1,1 +1,1 @@
-web: python manage.py runserver
+web: gunicorn dango-my-django.wsgi --log-file -
