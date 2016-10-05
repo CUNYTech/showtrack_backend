@@ -1,1 +1,1 @@
-web: gunicorn dango-my-django.wsgi
+web: gunicorn starter.wsgi
