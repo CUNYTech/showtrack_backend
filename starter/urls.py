@@ -22,5 +22,6 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     # '^$' = empty string
     url(r'^$', views.hello_world),
-    url(r'^api/v1/search/', views.search)
+    url(r'^api/v1/search/', views.search),
+    url(r'^api/v1/details/', views.details)
 ]

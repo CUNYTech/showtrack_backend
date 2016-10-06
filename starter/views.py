@@ -18,13 +18,26 @@ def hello_world(request):
     return render(request, 'index.html')
 
 def search(request):
-    query = request.GET.get('show', 'tron')
+    query = request.GET.get('show', 'game-of-thrones')
     headers = {
     'Content-Type': 'application/json',
     'trakt-api-version': '2',
     'trakt-api-key': CLIENT_ID
     }
     request = Request('https://api.trakt.tv/search/show?query=' + query, headers=headers)
+
+    response_body = urlopen(request).read()
+    print(response_body)
+    return HttpResponse(response_body)
+
+def details(request):
+    query = request.GET.get('show', 'game-of-thrones')
+    headers = {
+    'Content-Type': 'application/json',
+    'trakt-api-version': '2',
+    'trakt-api-key': CLIENT_ID
+    }
+    request = Request('https://api.trakt.tv/shows/' + query + "?extended=full", headers=headers)
 
     response_body = urlopen(request).read()
     print(response_body)
