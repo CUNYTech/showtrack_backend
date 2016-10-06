@@ -24,7 +24,7 @@ def search(request):
     'trakt-api-version': '2',
     'trakt-api-key': CLIENT_ID
     }
-    request = Request('https://api.trakt.tv/search/movie?query=' + query, headers=headers)
+    request = Request('https://api.trakt.tv/search/show?query=' + query, headers=headers)
 
     response_body = urlopen(request).read()
     print(response_body)
