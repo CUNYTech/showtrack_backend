@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-# from django.shortcuts import render
+from django.shortcuts import render
 from urllib.request import Request, urlopen
 import json
 
@@ -10,14 +10,17 @@ with open('env.json') as data_file:
 def hello_world(request):
     
     # return HttpResponse("Hello World")
-    # return render(request, 'index.html')
+    return render(request, 'index.html')
+
+def search(request):
+    query = request.GET.get('show', 'tron')
     print(data['CLIENT_ID'])
     headers = {
     'Content-Type': 'application/json',
     'trakt-api-version': '2',
     'trakt-api-key': CLIENT_ID
     }
-    request = Request('https://api.trakt.tv/search/movie?query=tron', headers=headers)
+    request = Request('https://api.trakt.tv/search/movie?query=' + query, headers=headers)
 
     response_body = urlopen(request).read()
     print(response_body)

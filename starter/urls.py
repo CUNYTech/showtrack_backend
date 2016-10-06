@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^courses/', include('courses.urls')),
     url(r'^admin/', admin.site.urls),
     # '^$' = empty string
-    url(r'^$', views.hello_world)
+    url(r'^$', views.hello_world),
+    url(r'^api/v1/search/', views.search)
 ]
