@@ -19,7 +19,6 @@ def hello_world(request):
 
 def search(request):
     query = request.GET.get('show', 'tron')
-    print(data['CLIENT_ID'])
     headers = {
     'Content-Type': 'application/json',
     'trakt-api-version': '2',
