@@ -9,8 +9,8 @@ if os.environ.get('DJANGO_ENV'):
     CLIENT_ID = os.environ.get('CLIENT_ID')
 else:
     with open('env.json') as data_file:    
-    data = json.load(data_file)
-    CLIENT_ID = data["CLIENT_ID"]
+        data = json.load(data_file)
+        CLIENT_ID = data["CLIENT_ID"]
 
 def hello_world(request):
     
