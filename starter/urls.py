@@ -15,13 +15,20 @@ Including another URLconf
 """
 from django.conf.urls import include, url
 from django.contrib import admin
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from . import views
 
 urlpatterns = [
-    url(r'^courses/', include('courses.urls')),
+    url(r'^courses/', include('courses.urls', namespace='courses')),
     url(r'^admin/', admin.site.urls),
     # '^$' = empty string
-    url(r'^$', views.hello_world),
+    # url(r'^$', views.hello_world, name='hello_world'),
+    url(r'^$', views.HelloWorld.as_view(), name='hello_world'),
     url(r'^api/v1/search/', views.search),
-    url(r'^api/v1/details/', views.details)
+    url(r'^api/v1/details/', views.details),
+    url(r'^api/v1/page/(?P<page_num>\d+)', views.test),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^api/v1/courses/', include('courses.urls', namespace='courses')),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

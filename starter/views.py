@@ -1,6 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
 from urllib.request import Request, urlopen
+from django.views.generic import TemplateView
+
 import json
 import os
 
@@ -16,6 +18,9 @@ def hello_world(request):
     
     # return HttpResponse("Hello World")
     return render(request, 'index.html')
+
+class HelloWorld(TemplateView):
+    template_name = 'index.html'
 
 def search(request):
     query = request.GET.get('show', 'game-of-thrones')
@@ -37,8 +42,11 @@ def details(request):
     'trakt-api-version': '2',
     'trakt-api-key': CLIENT_ID
     }
-    request = Request('https://api.trakt.tv/shows/' + query + "?extended=full", headers=headers)
+    request = Request('https://api.trakt.tv/shows/' + query, headers=headers)
 
     response_body = urlopen(request).read()
     print(response_body)
     return HttpResponse(response_body)
+
+def test(request, page_num):
+    return HttpResponse(page_num)

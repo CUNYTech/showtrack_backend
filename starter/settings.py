@@ -40,8 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'courses',
     'rest_framework',
+    'courses',
+
 ]
 
 MIDDLEWARE = [
@@ -135,9 +136,9 @@ STATIC_ROOT = os.path.join(PROJECT_ROOT, 'staticfiles')
 STATIC_URL = '/static/'
 
 # Extra places for collectstatic to find static files.
-#STATICFILES_DIRS = (
-#    os.path.join(PROJECT_ROOT, 'static'),
-#)
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'assets'),
+)
 
 db_from_env = dj_database_url.config()
 DATABASES['default'].update(db_from_env)
@@ -146,3 +147,13 @@ DATABASES['default'].update(db_from_env)
 # https://warehouse.python.org/project/whitenoise/
 
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
+
+# REST Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.SessionAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    )
+}

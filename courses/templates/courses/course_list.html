@@ -1,4 +1,10 @@
-{% for course in courses %}
-<h2>{{course.title}}</h2>
-{{course.desc}}
-{% endfor %}
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="cards">
+    {% for course in courses %}
+        <h2>{{course.title}}</h2>
+        {{course.desc}}
+    {% endfor %}
+</div>
+{% endblock %}
