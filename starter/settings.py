@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'courses',
-
+    'accounts'
 ]
 
 MIDDLEWARE = [
@@ -157,3 +157,5 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     )
 }
+
+AUTH_USER_MODEL = "accounts.User"
