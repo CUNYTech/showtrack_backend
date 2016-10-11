@@ -21,6 +21,7 @@ from . import views
 urlpatterns = [
     url(r'^courses/', include('courses.urls', namespace='courses')),
     url(r'^admin/', admin.site.urls),
+    # url(r'^accounts/', include('accounts.urls', namespace="accounts")),
     # '^$' = empty string
     # url(r'^$', views.hello_world, name='hello_world'),
     url(r'^$', views.HelloWorld.as_view(), name='hello_world'),
@@ -30,6 +31,7 @@ urlpatterns = [
     url(r'^api/v1/page/(?P<page_num>\d+)', views.test),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^api/v1/courses/', include('courses.urls', namespace='courses')),
+    url(r'^api/v1/accounts/', include('accounts.urls', namespace='accounts')),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

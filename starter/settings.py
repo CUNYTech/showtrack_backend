@@ -86,7 +86,7 @@ DATABASES = {
     #}
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'starter',
+        'NAME': 'starter1',
         'USER': 'Cheng',
         'PASSWORD': '123',
         'HOST': 'localhost',
@@ -155,7 +155,11 @@ REST_FRAMEWORK = {
     ),
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ),
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.JSONParser',
     )
 }
 
 AUTH_USER_MODEL = "accounts.User"
+CSRF_COOKIE_SECURE = False

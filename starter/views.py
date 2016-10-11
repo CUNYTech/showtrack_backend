@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http import HttpResponse
 from django.shortcuts import render
 from urllib.request import Request, urlopen
@@ -51,7 +52,7 @@ def details(request):
     print(response_body)
     return HttpResponse(response_body)
 
-class DetailList(APIView):
+class DetailList(LoginRequiredMixin, APIView):
     def get(self, request, show, format=None):
         query = show
         headers = {
