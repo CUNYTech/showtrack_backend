@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
 from .models import Course, Step
@@ -23,6 +24,7 @@ def step_detail(request, course_pk, step_pk):
     return render(request, 'courses/step_detail.html', {'step': step})
 
 class ListCourse(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
         courses = Course.objects.all()
         serializer = serializers.CourseSerializer(courses, many=True)
