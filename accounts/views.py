@@ -27,7 +27,7 @@ def login_view(request):
 
 @csrf_exempt
 def signup_view(request):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     print("DATA ", Request(request).data)
     serialized = UserSerializer(data=request.data)
     if serialized.is_valid():
@@ -44,7 +44,7 @@ def signup_view(request):
         # return HttpResponse(serialized.errors, status=400)
 
 class UserCreateAPIView(ListCreateAPIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
     queryset = User.objects.all()
     serializer_class = UserSerializer
 
