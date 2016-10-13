@@ -26,18 +26,19 @@ def hello_world(request):
 class HelloWorld(TemplateView):
     template_name = 'index.html'
 
-def search(request):
-    query = request.GET.get('show', 'game-of-thrones')
-    headers = {
-    'Content-Type': 'application/json',
-    'trakt-api-version': '2',
-    'trakt-api-key': CLIENT_ID
-    }
-    request = Request('https://api.trakt.tv/search/show?query=' + query, headers=headers)
+class SearchView(APIView):
+    def get(self, request, show, format=None):
+        query = show
+        headers = {
+        'Content-Type': 'application/json',
+        'trakt-api-version': '2',
+        'trakt-api-key': CLIENT_ID
+        }
+        request = Request('https://api.trakt.tv/search/show?query=' + query, headers=headers)
 
-    response_body = urlopen(request).read()
-    print(response_body)
-    return HttpResponse(response_body)
+        response_body = urlopen(request).read()
+        print(response_body)
+        return HttpResponse(response_body)
 
 def details(request):
     query = request.GET.get('show', 'game-of-thrones')
@@ -51,8 +52,8 @@ def details(request):
     response_body = urlopen(request).read()
     print(response_body)
     return HttpResponse(response_body)
-
-class DetailList(LoginRequiredMixin, APIView):
+# LoginRequiredMixin
+class DetailList(APIView):
     def get(self, request, show, format=None):
         query = show
         headers = {

@@ -25,7 +25,7 @@ urlpatterns = [
     # '^$' = empty string
     # url(r'^$', views.hello_world, name='hello_world'),
     url(r'^$', views.HelloWorld.as_view(), name='hello_world'),
-    url(r'^api/v1/search/', views.search),
+    url(r'^api/v1/search/(?P<show>.+)/$', views.SearchView.as_view()),
     # url(r'^api/v1/details/', views.details),
     url(r'^api/v1/details/(?P<show>.+)/$', views.DetailList.as_view()),
     url(r'^api/v1/page/(?P<page_num>\d+)', views.test),
