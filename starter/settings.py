@@ -181,7 +181,7 @@ REST_FRAMEWORK = {
 }
 
 AUTH_USER_MODEL = "accounts.User"
-CSRF_COOKIE_SECURE = False
+# CSRF_COOKIE_SECURE = False
 
 JWT_AUTH = {
     'JWT_ENCODE_HANDLER':
@@ -191,7 +191,8 @@ JWT_AUTH = {
     'rest_framework_jwt.utils.jwt_decode_handler',
 
     'JWT_PAYLOAD_HANDLER':
-    'rest_framework_jwt.utils.jwt_payload_handler',
+    'accounts.utils.jwt_payload_handler',
+    #'rest_framework_jwt.utils.jwt_payload_handler',
 
     'JWT_PAYLOAD_GET_USER_ID_HANDLER':
     'rest_framework_jwt.utils.jwt_get_user_id_from_payload_handler',
@@ -217,3 +218,4 @@ JWT_AUTH = {
 }
 
 CORS_ORIGIN_ALLOW_ALL = True
+APPEND_SLASH=False
