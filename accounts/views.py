@@ -4,7 +4,7 @@ from .serializers import UserSerializer
 from rest_framework.request import Request
 from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
-from rest_framework.generics import ListCreateAPIView, CreateAPIView
+from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.renderers import JSONRenderer
 from rest_framework_jwt.settings import api_settings
@@ -23,7 +23,6 @@ class UserCreateAPIView(CreateAPIView):
         serializer = self.get_serializer(data=request.data)
         if not serializer.is_valid():
             errors = []
-            err = serializer.errors
             for error in serializer.errors:
                 errors.append(error + ": " + serializer.errors[error][0])
             raise serializers.ValidationError({"error": errors})
@@ -36,3 +35,8 @@ class UserCreateAPIView(CreateAPIView):
         token = jwt_encode_handler(payload)
 
         return Response({"token": token}, status=status.HTTP_201_CREATED, headers=headers)
+
+class UserListAPIView(ListAPIView):
+    permission_classes = [IsAuthenticated]
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
