@@ -29,16 +29,18 @@ class HelloWorld(TemplateView):
 class SearchView(APIView):
     def get(self, request, show, format=None):
         query = show
+        query.replace(" ", "%20")
         headers = {
         'Content-Type': 'application/json',
+        # 'X-Pagination-Page': request.META.get('X-Pagination-Page') or 1,
+        # 'X-Pagination-Limit': request.META.get('X-Pagination-Limit') or 10,
         'trakt-api-version': '2',
         'trakt-api-key': CLIENT_ID
         }
-        request = Request('https://api.trakt.tv/search/show?query=' + query, headers=headers)
+        re = requests.get('https://api.trakt.tv/search/show?query=' + query + "&limit=20", headers=headers)
 
-        response_body = urlopen(request).read()
-        print(response_body)
-        return HttpResponse(response_body)
+        print(re)
+        return HttpResponse(re, content_type="application/json")
 
 def details(request):
     query = request.GET.get('show', 'game-of-thrones')
