@@ -71,3 +71,19 @@ class DetailList(APIView):
 
 def test(request, page_num):
     return HttpResponse(page_num)
+
+class SearchViewV2(APIView):
+    def get(self, request, show, format=None):
+        query = show
+        query.replace(" ", "%20")
+        re = requests.get('http://api.tvmaze.com/search/shows?q=' + query)
+        
+        return HttpResponse(re, content_type="application/json")
+
+class SingleSearchV2(APIView):
+    def get(self, request, show, format=None):
+        query = show
+        query.replace(" ", "%20")
+        re = requests.get('http://api.tvmaze.com/singlesearch/shows?q=' + query)
+        
+        return HttpResponse(re, content_type="application/json")
