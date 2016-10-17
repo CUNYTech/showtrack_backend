@@ -1,3 +1,6 @@
+# Custom
+test1.py
+
 
 # Created by https://www.gitignore.io/api/python
 
@@ -92,8 +95,13 @@ ENV/
 .spyderproject
 
 # Rope project settings
-.ropeproject
-# Elastic Beanstalk Files
-.elasticbeanstalk/*
-!.elasticbeanstalk/*.cfg.yml
-!.elasticbeanstalk/*.global.yml
+.ropeproject
+
+# Elastic Beanstalk Files
+
+.elasticbeanstalk/*
+
+!.elasticbeanstalk/*.cfg.yml
+
+!.elasticbeanstalk/*.global.yml
+
