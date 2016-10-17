@@ -87,3 +87,16 @@ class SingleSearchV2(APIView):
         re = requests.get('http://api.tvmaze.com/singlesearch/shows?q=' + query)
         
         return HttpResponse(re, content_type="application/json")
+
+class IDSearchV2(APIView):
+    def get(self, request, id, format=None):
+        query = id
+        re = requests.get('http://api.tvmaze.com/shows/{}'.format(query))
+        return HttpResponse(re, content_type="application/json")
+
+class ShowEpisodes(APIView):
+    def get(self, request, id, format=None):
+        query = id
+        re = requests.get('http://api.tvmaze.com/shows/{}/episodes'.format(query))
+        
+        return HttpResponse(re, content_type="application/json")

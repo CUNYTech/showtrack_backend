@@ -34,6 +34,8 @@ urlpatterns = [
     url(r'^api/v1/accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^api/v2/search/(?P<show>.+)/?$', views.SearchViewV2.as_view()),
     url(r'^api/v2/single/(?P<show>.+)/?$', views.SingleSearchV2.as_view()),
+    url(r'^api/v2/shows/(?P<id>\d+)/?$', views.IDSearchV2.as_view()),
+    url(r'^api/v2/shows/(?P<id>\d+)/episodes/?$', views.ShowEpisodes.as_view()),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
