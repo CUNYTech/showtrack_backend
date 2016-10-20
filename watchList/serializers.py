@@ -14,6 +14,7 @@ class WatchListSerializer(serializers.ModelSerializer):
             'title',
             'desc',
             'created_at',
-            'shows'
+            'shows',
+            'user'
         )
         model = models.WatchList

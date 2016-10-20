@@ -43,7 +43,6 @@ class UserListAPIView(ListAPIView):
 
 class UserDetailView(APIView):
     def get(self, request, format=None):
-
         print(UserSerializer(request.user).data)
         test = api_settings.JWT_DECODE_HANDLER(request.auth)
         print(test)
