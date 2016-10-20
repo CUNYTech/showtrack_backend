@@ -23,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
                 "write_only": True
             }
         }
-    
+
     def create(self, data):
         email = data["email"]
         username = data["username"]

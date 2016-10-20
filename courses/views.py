@@ -26,6 +26,5 @@ def step_detail(request, course_pk, step_pk):
 class ListCourse(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
-        courses = Course.objects.all()
-        serializer = serializers.CourseSerializer(courses, many=True)
-        return Response(serializer.data)
+        user = request.META["Authorization"]
+        return Response(user)

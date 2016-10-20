@@ -36,6 +36,7 @@ urlpatterns = [
     url(r'^api/v2/single/(?P<show>.+)/?$', views.SingleSearchV2.as_view()),
     url(r'^api/v2/shows/(?P<id>\d+)/?$', views.IDSearchV2.as_view()),
     url(r'^api/v2/shows/(?P<id>\d+)/episodes/?$', views.ShowEpisodes.as_view()),
+    url(r'^', include('watchList.urls', namespace='watchList'))
 ]
 
 urlpatterns += staticfiles_urlpatterns()

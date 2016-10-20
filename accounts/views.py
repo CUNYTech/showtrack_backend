@@ -40,3 +40,12 @@ class UserListAPIView(ListAPIView):
     permission_classes = [IsAuthenticated]
     queryset = User.objects.all()
     serializer_class = UserSerializer
+
+class UserDetailView(APIView):
+    def get(self, request, format=None):
+
+        print(UserSerializer(request.user).data)
+        test = api_settings.JWT_DECODE_HANDLER(request.auth)
+        print(test)
+        user = request.META.get("HTTP_AUTHORIZATION")
+        return Response({"jwt": user, "auth": request.auth, "test": test})
