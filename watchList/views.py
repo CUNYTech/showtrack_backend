@@ -28,3 +28,9 @@ class WatchListCreateAPIView(CreateAPIView):
 class ShowWatchList(ListAPIView):
     queryset = WatchList.objects.all()
     serializer_class = WatchListSerializer
+
+    def list(self, request):
+        print(request.user.id)
+        queryset = self.get_queryset().filter(user=request.user.id)
+        serializer = WatchListSerializer(queryset, many=True)
+        return Response(serializer.data)
