@@ -1,5 +1,5 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from urllib.request import Request, urlopen
 from django.views.generic import TemplateView
@@ -100,3 +100,22 @@ class ShowEpisodes(APIView):
         re = requests.get('http://api.tvmaze.com/shows/{}/episodes'.format(query))
         
         return HttpResponse(re, content_type="application/json")
+
+class TrendingView(APIView):
+    def get(self, request, format=None):
+        headers = {
+        'Content-Type': 'application/json',
+        'trakt-api-version': '2',
+        'trakt-api-key': CLIENT_ID
+        }
+        request1 = requests.get('https://api.trakt.tv/shows/trending?extended=full', headers=headers)
+        request1 = request1.json()
+        test2 = []
+        for show in request1:
+            # print(show['show']['ids'])
+            request2 = requests.get('http://api.tvmaze.com/lookup/shows?imdb={}'.format(show['show']['ids']['imdb']))
+            test2.append(request2.json())
+        
+        # response_body = urlopen(request).read()
+        # print(response_body)
+        return JsonResponse(test2, safe=False)
