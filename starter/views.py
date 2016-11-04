@@ -13,10 +13,12 @@ import requests
 CLIENT_ID = None
 if os.environ.get('DJANGO_ENV'):
     CLIENT_ID = os.environ.get('CLIENT_ID')
+    TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 else:
     with open('env.json') as data_file:    
         data = json.load(data_file)
         CLIENT_ID = data["CLIENT_ID"]
+        TMDB_API_KEY = data['TMDB_API_KEY']
 
 def hello_world(request):
     
@@ -119,3 +121,16 @@ class TrendingView(APIView):
         # response_body = urlopen(request).read()
         # print(response_body)
         return JsonResponse(test2, safe=False)
+
+class PopularView(APIView):
+    def get(self, request, format=None):
+
+        popular = requests.get('https://api.themoviedb.org/3/tv/popular?api_key={}&language=en-US'.format(TMDB_API_KEY))
+        # response_body = urlopen(request).read()
+        # print(response_body)
+        popular = popular.json()
+
+        for show in popular['results']:
+            show['poster_img'] = 'https://image.tmdb.org/t/p/w500/{}'.format(show['poster_path'])
+
+        return JsonResponse(popular, safe=False)
