@@ -1,6 +1,6 @@
 branch-defaults:
   master:
-    environment: starter-dev
+    environment: starter-dev2
     group_suffix: null
 global:
   application_name: starter
