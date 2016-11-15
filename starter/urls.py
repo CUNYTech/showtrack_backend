@@ -38,7 +38,8 @@ urlpatterns = [
     url(r'^api/v2/shows/(?P<id>\d+)/episodes/?$', views.ShowEpisodes.as_view()),
     url(r'^', include('watchList.urls', namespace='watchList')),
     url(r'^api/v2/trending/?$', views.TrendingView.as_view()),
-    url(r'^api/v2/popular/?$', views.PopularView.as_view())
+    url(r'^api/v2/popular/?$', views.PopularView.as_view()),
+    url(r'^test/?$', views.TestView.as_view())
 ]
 
 urlpatterns += staticfiles_urlpatterns()

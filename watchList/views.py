@@ -13,7 +13,7 @@ class WatchListView(ListAPIView):
     serializer_class = WatchListSerializer
 
 class WatchListCreateAPIView(CreateAPIView):
-    permission_classes = [AllowAny]
+    permission_classes = [IsAuthenticated]
     queryset = WatchList.objects.all()
     serializer_class = WatchListSerializer
 

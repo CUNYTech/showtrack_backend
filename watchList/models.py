@@ -8,12 +8,11 @@ import accounts
 class WatchList(models.Model):
     user = models.ForeignKey(accounts.models.User)
     created_at = models.DateTimeField(auto_now_add=True)
-    title = models.CharField(max_length=255)
-    desc = models.CharField(max_length=255)
-    shows = JSONField()
+    show_id = JSONField()
+    progress = models.IntegerField(blank=True, default=0)
 
     def __str__(self):
-        return self.title
+        return self.show_id
 
 # class Show(models.Model):
 #     show_id = models.IntegerField()

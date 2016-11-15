@@ -11,10 +11,9 @@ class WatchListSerializer(serializers.ModelSerializer):
     class Meta:
         fields = (
             'id',
-            'title',
-            'desc',
             'created_at',
-            'shows',
+            'show_id',
+            'progress',
             'user'
         )
         model = models.WatchList
