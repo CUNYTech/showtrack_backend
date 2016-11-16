@@ -5,6 +5,8 @@ from urllib.request import Request, urlopen
 from django.views.generic import TemplateView
 from rest_framework.views import APIView
 from rest_framework.response import Response
+from rest_framework.permissions import AllowAny, IsAuthenticated
+
 
 import json
 import os
