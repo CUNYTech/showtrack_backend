@@ -136,14 +136,15 @@ class PopularView(APIView):
         return JsonResponse(popular, safe=False)
 
 class TestView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, format=None):
         d = {
             'name': 'name',
             'date': 'date',
             'amount': 'amount'
         }
-        if d.keys() != ['amount', 'name']:
-            raise ValueError("DSDS")
+        # if d.keys() != ['amount', 'name']:
+        #     raise ValueError("DSDS")
 
         return HttpResponse("Hi")
 
