@@ -17,7 +17,7 @@ if os.environ.get('DJANGO_ENV'):
     CLIENT_ID = os.environ.get('CLIENT_ID')
     TMDB_API_KEY = os.environ.get('TMDB_API_KEY')
 else:
-    with open('env.json') as data_file:    
+    with open('env.json') as data_file:
         data = json.load(data_file)
         CLIENT_ID = data["CLIENT_ID"]
         TMDB_API_KEY = data['TMDB_API_KEY']
