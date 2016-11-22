@@ -17,3 +17,13 @@ class WatchListSerializer(serializers.ModelSerializer):
             'user'
         )
         model = models.WatchList
+
+class ShowSerializer(serializers.ModelSerializer):
+    class Meta:
+        fields = (
+            'id',
+            'content',
+            'last_updated',
+            'created'
+        )
+        model = models.Show

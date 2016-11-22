@@ -7,6 +7,9 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
+from watchList.models import Show
+from watchList.serializers import ShowSerializer
+
 
 import json
 import os
@@ -95,8 +98,15 @@ class SingleSearchV2(APIView):
 class IDSearchV2(APIView):
     def get(self, request, id, format=None):
         query = id
-        re = requests.get('http://api.tvmaze.com/shows/{}'.format(query))
-        return HttpResponse(re, content_type="application/json")
+        queryset = Show.objects.filter(pk=query)
+        if not queryset:
+            re = requests.get('http://api.tvmaze.com/shows/{}'.format(query))
+            re_json = re.json()
+            queryset = Show.objects.create(id=re_json['id'], content=re_json)
+        
+        serializer = ShowSerializer(queryset, many=True)
+
+        return HttpResponse(json.dumps(serializer.data), content_type="application/json")
 
 class ShowEpisodes(APIView):
     def get(self, request, id, format=None):
