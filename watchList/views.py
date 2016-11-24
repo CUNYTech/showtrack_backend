@@ -3,9 +3,10 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
+import json
 
-from .serializers import WatchListSerializer
-from .models import WatchList
+from .serializers import WatchListSerializer, ShowSerializer
+from .models import WatchList, Show
 
 # Create your views here.
 class WatchListView(ListAPIView):
@@ -33,4 +34,14 @@ class ShowWatchList(ListAPIView):
         print(request.user.id)
         queryset = self.get_queryset().filter(user=request.user.id)
         serializer = WatchListSerializer(queryset, many=True)
+        shows = Show.objects.all()
+        print(serializer.data)
+        for show in serializer.data:
+            show_serializer = ShowSerializer(shows.filter(id=show['show_id']), many=True)
+            show['show_details'] = show_serializer.data[0]
+            # show_serializer.data[0]['tests'] = "dsadsadasdsadsa"
+            # print(show_serializer.data[0]['tests'])
+            
+            # watch_list.append(json.dumps(show_serializer.data))
+            # print(show['id'])
         return Response(serializer.data)

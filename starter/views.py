@@ -38,11 +38,11 @@ class SearchView(APIView):
         query = show
         query.replace(" ", "%20")
         headers = {
-        'Content-Type': 'application/json',
-        # 'X-Pagination-Page': request.META.get('X-Pagination-Page') or 1,
-        # 'X-Pagination-Limit': request.META.get('X-Pagination-Limit') or 10,
-        'trakt-api-version': '2',
-        'trakt-api-key': CLIENT_ID
+            'Content-Type': 'application/json',
+            # 'X-Pagination-Page': request.META.get('X-Pagination-Page') or 1,
+            # 'X-Pagination-Limit': request.META.get('X-Pagination-Limit') or 10,
+            'trakt-api-version': '2',
+            'trakt-api-key': CLIENT_ID
         }
         re = requests.get('https://api.trakt.tv/search/show?query=' + query + "&limit=20", headers=headers)
 
@@ -52,9 +52,9 @@ class SearchView(APIView):
 def details(request):
     query = request.GET.get('show', 'game-of-thrones')
     headers = {
-    'Content-Type': 'application/json',
-    'trakt-api-version': '2',
-    'trakt-api-key': CLIENT_ID
+        'Content-Type': 'application/json',
+        'trakt-api-version': '2',
+        'trakt-api-key': CLIENT_ID
     }
     request = Request('https://api.trakt.tv/shows/' + query, headers=headers)
 
@@ -66,9 +66,9 @@ class DetailList(APIView):
     def get(self, request, show, format=None):
         query = show
         headers = {
-        'Content-Type': 'application/json',
-        'trakt-api-version': '2',
-        'trakt-api-key': CLIENT_ID
+            'Content-Type': 'application/json',
+            'trakt-api-version': '2',
+            'trakt-api-key': CLIENT_ID
         }
         request = requests.get('https://api.trakt.tv/shows/' + query + "?extended=full", headers=headers)
 
@@ -98,7 +98,7 @@ class SingleSearchV2(APIView):
 class IDSearchV2(APIView):
     def get(self, request, id, format=None):
         query = id
-        queryset = Show.objects.filter(pk=query)
+        queryset = Show.objects.filter(id=query)
         if not queryset:
             re = requests.get('http://api.tvmaze.com/shows/{}'.format(query))
             re_json = re.json()
@@ -118,9 +118,9 @@ class ShowEpisodes(APIView):
 class TrendingView(APIView):
     def get(self, request, format=None):
         headers = {
-        'Content-Type': 'application/json',
-        'trakt-api-version': '2',
-        'trakt-api-key': CLIENT_ID
+            'Content-Type': 'application/json',
+            'trakt-api-version': '2',
+            'trakt-api-key': CLIENT_ID
         }
         request1 = requests.get('https://api.trakt.tv/shows/trending?extended=full', headers=headers)
         request1 = request1.json()
