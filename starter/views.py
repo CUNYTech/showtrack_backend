@@ -128,7 +128,8 @@ class TrendingView(APIView):
         for show in request1:
             # print(show['show']['ids'])
             request2 = requests.get('http://api.tvmaze.com/lookup/shows?imdb={}'.format(show['show']['ids']['imdb']))
-            test2.append(request2.json())
+            if request2.status_code == requests.codes.ok:
+                test2.append(request2.json())
         
         # response_body = urlopen(request).read()
         # print(response_body)
