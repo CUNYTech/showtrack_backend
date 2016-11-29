@@ -7,12 +7,16 @@ import accounts
 # Create your models here.
 class WatchList(models.Model):
     user = models.ForeignKey(accounts.models.User)
-    created_at = models.DateTimeField(auto_now_add=True)
     show_id = JSONField()
-    progress = models.IntegerField(blank=True, default=0)
+    progress = JSONField(default={'season': 1, 'episode': 1})
+    last_updated = models.DateTimeField(auto_now=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "show_id")
 
     def __str__(self):
-        return self.show_id
+        return str(self.show_id)
 
 class Show(models.Model):
     id = models.IntegerField(primary_key=True)
