@@ -102,7 +102,8 @@ class IDSearchV2(APIView):
         if not queryset:
             re = requests.get('http://api.tvmaze.com/shows/{}'.format(query))
             re_json = re.json()
-            queryset = Show.objects.create(id=re_json['id'], content=re_json)
+            Show.objects.create(id=re_json['id'], content=re_json)
+            queryset = Show.objects.filter(id=query)
 
         serializer = ShowSerializer(queryset, many=True)
 
