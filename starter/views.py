@@ -103,10 +103,10 @@ class IDSearchV2(APIView):
             re = requests.get('http://api.tvmaze.com/shows/{}'.format(query))
             re_json = re.json()
             queryset = Show.objects.create(id=re_json['id'], content=re_json)
-        
+
         serializer = ShowSerializer(queryset, many=True)
 
-        return HttpResponse(json.dumps(serializer.data), content_type="application/json")
+        return JsonResponse(serializer.data[0])
 
 class ShowEpisodes(APIView):
     def get(self, request, id, format=None):
