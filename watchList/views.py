@@ -1,10 +1,11 @@
+import json
+import requests
 from django.http import HttpResponse
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
-import json
-import requests
+
 
 from .serializers import WatchListSerializer, ShowSerializer
 from .models import WatchList, Show
@@ -34,11 +35,9 @@ class ShowWatchList(ListAPIView):
     serializer_class = WatchListSerializer
 
     def list(self, request):
-        print(request.user.id)
         queryset = self.get_queryset().filter(user=request.user.id)
         serializer = WatchListSerializer(queryset, many=True)
         shows = Show.objects.all()
-        print(serializer.data)
         for show in serializer.data:
             show_serializer = ShowSerializer(shows.filter(id=show['show_id']), many=True)
             if show_serializer.data:
@@ -46,13 +45,11 @@ class ShowWatchList(ListAPIView):
             else:
                 re = requests.get('http://api.tvmaze.com/shows/{}'.format(show['show_id']))
                 re_json = re.json()
-                query = Show.objects.create(id=re_json['id'], content=re_json)
-                show_serializer = ShowSerializer(query, many=True)
+                Show.objects.create(id=re_json['id'], content=re_json)
+                show_serializer = ShowSerializer(shows.filter(id=re_json['id']), many=True)
                 show['show_details'] = show_serializer.data[0]
-            # show_serializer.data[0]['tests'] = "dsadsadasdsadsa"
-            # print(show_serializer.data[0]['tests'])
-            # watch_list.append(json.dumps(show_serializer.data))
-            # print(show['id'])
+                # show.update({'show_details': show_serializer.data[0]})
+
         return Response(serializer.data)
 
 class UpdateWatchList(UpdateAPIView):
