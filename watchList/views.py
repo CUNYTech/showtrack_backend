@@ -1,9 +1,10 @@
 import json
 import requests
 from django.http import HttpResponse
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework import status
-from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView, UpdateAPIView
+from rest_framework.generics import ListCreateAPIView, CreateAPIView, ListAPIView, UpdateAPIView, DestroyAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 
 
@@ -82,3 +83,18 @@ class UpdateWatchList(UpdateAPIView):
     def partial_update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         return self.update(request, *args, **kwargs)
+
+class DeleteWatchListShow(DestroyAPIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = WatchListSerializer
+
+    def destroy(self, request, *args, **kwargs):
+        message = {}
+        instance = None
+        try:
+            instance = WatchList.objects.get(user=request.user.id, show_id=request.data['show_id'])
+            message = {'message': 'Show successfully deleted'}
+        except ObjectDoesNotExist:
+            message = {'error': 'Invalid show ID'}
+        self.perform_destroy(instance)
+        return Response(message, status=status.HTTP_202_ACCEPTED)
