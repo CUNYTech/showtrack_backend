@@ -98,12 +98,20 @@ class SingleSearchV2(APIView):
 class IDSearchV2(APIView):
     def get(self, request, id, format=None):
         query = id
-        queryset = Show.objects.filter(id=query)
-        if not queryset:
-            re = requests.get('http://api.tvmaze.com/shows/{}'.format(query))
-            re_json = re.json()
-            Show.objects.create(id=re_json['id'], content=re_json)
+        if query[:2] == 'tt':
+            queryset = Show.objects.filter(content__externals__imdb=query)
+            if not queryset:
+                re = requests.get('http://api.tvmaze.com/lookup/shows?imdb={imdb}'.format(imdb = query)).json()
+                queryset = Show.objects.filter(id=re['id'])
+                Show.objects.create(id=re['id'], content=re)
+                queryset = Show.objects.filter(id=re['id'])
+        else:
             queryset = Show.objects.filter(id=query)
+            if not queryset:
+                re = requests.get('http://api.tvmaze.com/shows/{}'.format(query))
+                re_json = re.json()
+                Show.objects.create(id=re_json['id'], content=re_json)
+                queryset = Show.objects.filter(id=query)
 
         serializer = ShowSerializer(queryset, many=True)
 
@@ -145,7 +153,10 @@ class PopularView(APIView):
         popular = popular.json()
 
         for show in popular['results']:
+            external_ids = requests.get('https://api.themoviedb.org/3/tv/{tv_id}/external_ids?api_key={api_key}&language=en-US'
+                .format(tv_id = show['id'], api_key = TMDB_API_KEY)).json()
             show['poster_img'] = 'https://image.tmdb.org/t/p/w500/{}'.format(show['poster_path'])
+            show['external_ids'] = external_ids
 
         return JsonResponse(popular, safe=False)
 

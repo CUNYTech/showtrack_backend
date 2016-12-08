@@ -34,7 +34,7 @@ urlpatterns = [
     url(r'^api/v1/accounts/', include('accounts.urls', namespace='accounts')),
     url(r'^api/v2/search/(?P<show>.+)/?$', views.SearchViewV2.as_view()),
     url(r'^api/v2/single/(?P<show>.+)/?$', views.SingleSearchV2.as_view()),
-    url(r'^api/v2/shows/(?P<id>\d+)/?$', views.IDSearchV2.as_view()),
+    url(r'^api/v2/shows/(?P<id>(t{2})?\d+)/?$', views.IDSearchV2.as_view()),
     url(r'^api/v2/shows/(?P<id>\d+)/episodes/?$', views.ShowEpisodes.as_view()),
     url(r'^', include('watchList.urls', namespace='watchList')),
     url(r'^api/v2/trending/?$', views.TrendingView.as_view()),
